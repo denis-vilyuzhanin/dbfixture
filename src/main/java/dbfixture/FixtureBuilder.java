@@ -12,6 +12,8 @@ public class FixtureBuilder {
 			if (!column.isNullable()) {
 				if (column.isNumeric()) {
 					value = 0;
+				} else if (column.isCharacter()) {
+					value = "A";
 				}
 			}
 			values.put(column.getName(), value);

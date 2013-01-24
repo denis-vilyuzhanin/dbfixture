@@ -2,6 +2,7 @@ package dbfixture;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 import org.junit.Before;
@@ -39,7 +40,7 @@ public class FixtureBuilderTest {
 		
 		mockColumn(nullableNumericColumn, "nullableNumericColumn", true, true, false);
 		mockColumn(numericColumn, "numericColumn", false, true, false);
-		mockColumn(nullableCharacterColumn, "nullableCharacterColumn", false, true, true);
+		mockColumn(nullableCharacterColumn, "nullableCharacterColumn", true, false, true);
 		mockColumn(characterColumn, "characterColumn", false, false, true);
 		
 		when(table.getColumns()).thenReturn(
@@ -60,7 +61,7 @@ public class FixtureBuilderTest {
 	public void  buildFixture() {
 		Fixture actualFixture = builder.build(table);
 		
-		Map<String, Object> expectedValues = new HashMap<String, Object>();
+		Map<String, Object> expectedValues = new LinkedHashMap<String, Object>();
 		expectedValues.put("nullableNumericColumn", null);
 		expectedValues.put("numericColumn", 0);
 		expectedValues.put("nullableCharacterColumn", null);
