@@ -32,6 +32,7 @@ public class FixtureBuilderTest {
 		builder = new FixtureBuilder();
 		
 		mockColumn(nullableNumericColumn, "nullableNumericColumn", true, true);
+		mockColumn(numericColumn, "numericColumn", false, true);
 		
 		when(table.getColumns()).thenReturn(Arrays.asList(nullableNumericColumn));
 	}
@@ -48,6 +49,7 @@ public class FixtureBuilderTest {
 		
 		Map<String, Object> expectedValues = new HashMap<String, Object>();
 		expectedValues.put("nullableNumericColumn", null);
+		expectedValues.put("numericColumn", 0);
 		
 		assertEquals(expectedValues, actualFixture.getValues());
 	}
