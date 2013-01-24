@@ -34,7 +34,7 @@ public class FixtureBuilderTest {
 		mockColumn(nullableNumericColumn, "nullableNumericColumn", true, true);
 		mockColumn(numericColumn, "numericColumn", false, true);
 		
-		when(table.getColumns()).thenReturn(Arrays.asList(nullableNumericColumn));
+		when(table.getColumns()).thenReturn(Arrays.asList(nullableNumericColumn, numericColumn));
 	}
 
 	private void mockColumn(ColumnMetadata column, String name, boolean isNullable, boolean isNumeric) {

@@ -10,6 +10,8 @@ public class FixtureBuilder {
 		for(ColumnMetadata column : table.getColumns()) {
 			if (column.isNullable()) {
 				values.put(column.getName(), null);
+			} else if (column.isNumeric()) {
+				values.put(column.getName(), 0);
 			}
 		}
 		return new Fixture(values);
