@@ -8,11 +8,13 @@ public class FixtureBuilder {
 	public Fixture build(TableMetadata table) {
 		Map<String, Object> values = new LinkedHashMap<String, Object>();
 		for (ColumnMetadata column : table.getColumns()) {
+			TypeMetadata type = column.getType();
 			Object value = null;
+			
 			if (!column.isNullable()) {
-				if (column.isNumeric()) {
+				if (type.isNumeric()) {
 					value = 0;
-				} else if (column.isCharacter()) {
+				} else if (type.isCharacter()) {
 					value = "A";
 				}
 			}

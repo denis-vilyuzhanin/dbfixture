@@ -22,9 +22,18 @@ public class FixtureBuilderTest {
 
 	@Mock
 	TableMetadata table;
+	
+	@Mock
+	TypeMetadata anyNumericType;
+	
+	@Mock
+	TypeMetadata anyCharacterType;
 
 	@Before
 	public void init() {
+		when(anyNumericType.isNumeric()).thenReturn(true);
+		when(anyCharacterType.isCharacter()).thenReturn(true);
+		
 		builder = new FixtureBuilder();
 		List<ColumnMetadata> columns = Arrays.asList(
 				nullable(numeric(column("nullableNumericColumn"))),
@@ -54,14 +63,12 @@ public class FixtureBuilderTest {
 	}
 
 	private ColumnMetadata numeric(ColumnMetadata column) {
-		when(column.isNumeric()).thenReturn(true);
-		when(column.isCharacter()).thenReturn(false);
+		when(column.getType()).thenReturn(anyNumericType);
 		return column;
 	}
 
 	private ColumnMetadata character(ColumnMetadata column) {
-		when(column.isNumeric()).thenReturn(false);
-		when(column.isCharacter()).thenReturn(true);
+		when(column.getType()).thenReturn(anyCharacterType);
 		return column;
 	}
 
