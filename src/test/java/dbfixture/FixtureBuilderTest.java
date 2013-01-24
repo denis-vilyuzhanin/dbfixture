@@ -62,7 +62,7 @@ public class FixtureBuilderTest {
 		expectedValues.put("nullableDateColumn", null);
 		expectedValues.put("dateColumn", new Date());
 
-		assertEquals(expectedValues, actualFixture.getValues());
+		assertEquals(expectedValues.toString(), actualFixture.getValues().toString());
 	}
 
 	private ColumnMetadata column(String name) {
