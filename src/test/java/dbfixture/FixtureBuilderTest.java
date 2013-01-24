@@ -24,16 +24,22 @@ public class FixtureBuilderTest {
 	@Mock
 	ColumnMetadata nullableNumericColumn;
 	
+	@Mock
+	ColumnMetadata numericColumn;
 	
 	@Before
 	public void init() {
 		builder = new FixtureBuilder();
 		
-		when(nullableNumericColumn.getName()).thenReturn("nullableNumericColumn");
-		when(nullableNumericColumn.isNullable()).thenReturn(true);
-		when(nullableNumericColumn.isNumeric()).thenReturn(true);
+		mockColumn(nullableNumericColumn, "nullableNumericColumn", true, true);
 		
 		when(table.getColumns()).thenReturn(Arrays.asList(nullableNumericColumn));
+	}
+
+	private void mockColumn(ColumnMetadata column, String name, boolean isNullable, boolean isNumeric) {
+		when(column.getName()).thenReturn(name);
+		when(column.isNullable()).thenReturn(isNullable);
+		when(column.isNumeric()).thenReturn(isNumeric);
 	}
 	
 	@Test
