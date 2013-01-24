@@ -1,6 +1,7 @@
 package dbfixture;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -28,18 +29,24 @@ public class FixtureBuilderTest {
 	
 	@Mock
 	TypeMetadata anyCharacterType;
+	
+	@Mock
+	TypeMetadata anyDateType;
 
 	@Before
 	public void init() {
 		when(anyNumericType.isNumeric()).thenReturn(true);
 		when(anyCharacterType.isCharacter()).thenReturn(true);
+		when(anyDateType.isDate()).thenReturn(true);
 		
 		builder = new FixtureBuilder();
 		List<ColumnMetadata> columns = Arrays.asList(
 				nullable(numeric(column("nullableNumericColumn"))),
 				required(numeric(column("numericColumn"))),
 				nullable(character(column("nullableCharacterColumn"))),
-				required(character(column("characterColumn"))));
+				required(character(column("characterColumn"))),
+				nullable(date(column("nullableDateColumn"))),
+				required(date(column("dateColumn"))));
 		when(table.getColumns()).thenReturn(columns);
 	}
 
@@ -52,6 +59,8 @@ public class FixtureBuilderTest {
 		expectedValues.put("numericColumn", 0);
 		expectedValues.put("nullableCharacterColumn", null);
 		expectedValues.put("characterColumn", "A");
+		expectedValues.put("nullableDateColumn", null);
+		expectedValues.put("dateColumn", new Date());
 
 		assertEquals(expectedValues, actualFixture.getValues());
 	}
@@ -69,6 +78,11 @@ public class FixtureBuilderTest {
 
 	private ColumnMetadata character(ColumnMetadata column) {
 		when(column.getType()).thenReturn(anyCharacterType);
+		return column;
+	}
+	
+	private ColumnMetadata date(ColumnMetadata column) {
+		when(column.getType()).thenReturn(anyDateType);
 		return column;
 	}
 

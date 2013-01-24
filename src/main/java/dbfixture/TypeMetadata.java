@@ -11,4 +11,8 @@ public class TypeMetadata {
 		return false;
 	}
 
+	public boolean isDate() {
+		return false;
+	}
+
 }
