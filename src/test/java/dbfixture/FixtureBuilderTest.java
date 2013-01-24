@@ -18,8 +18,6 @@ public class FixtureBuilderTest {
 
 	FixtureBuilder builder;
 	
-	private Map<String, Object> expectedValues = new HashMap<String, Object>();
-	
 	@Mock
 	TableMetadata table;
 	
@@ -39,9 +37,12 @@ public class FixtureBuilderTest {
 	}
 	
 	@Test
-	public void  buildFixtureForNumericNullableColumn() {
+	public void  buildFixture() {
 		Fixture actualFixture = builder.build(table);
+		
+		Map<String, Object> expectedValues = new HashMap<String, Object>();
 		expectedValues.put("nullableNumericColumn", null);
+		
 		assertEquals(expectedValues, actualFixture.getValues());
 	}
 }
