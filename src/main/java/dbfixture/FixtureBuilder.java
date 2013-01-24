@@ -1,5 +1,6 @@
 package dbfixture;
 
+import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -16,6 +17,8 @@ public class FixtureBuilder {
 					value = 0;
 				} else if (type.isCharacter()) {
 					value = "A";
+				} else if (type.isDate()) {
+					value = new Date();
 				} else {
 					throw new IllegalArgumentException("Can't provide fixture for type: " + type);
 				}
