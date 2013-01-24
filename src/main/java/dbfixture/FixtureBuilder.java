@@ -16,6 +16,8 @@ public class FixtureBuilder {
 					value = 0;
 				} else if (type.isCharacter()) {
 					value = "A";
+				} else {
+					throw new IllegalArgumentException("Can't provide fixture for type: " + type);
 				}
 			}
 			values.put(column.getName(), value);
