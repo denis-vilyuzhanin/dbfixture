@@ -27,20 +27,33 @@ public class FixtureBuilderTest {
 	@Mock
 	ColumnMetadata numericColumn;
 	
+	@Mock
+	ColumnMetadata nullableCharacterColumn;
+	
+	@Mock
+	ColumnMetadata characterColumn;
+	
 	@Before
 	public void init() {
 		builder = new FixtureBuilder();
 		
-		mockColumn(nullableNumericColumn, "nullableNumericColumn", true, true);
-		mockColumn(numericColumn, "numericColumn", false, true);
+		mockColumn(nullableNumericColumn, "nullableNumericColumn", true, true, false);
+		mockColumn(numericColumn, "numericColumn", false, true, false);
+		mockColumn(nullableCharacterColumn, "nullableCharacterColumn", false, true, true);
+		mockColumn(characterColumn, "characterColumn", false, false, true);
 		
-		when(table.getColumns()).thenReturn(Arrays.asList(nullableNumericColumn, numericColumn));
+		when(table.getColumns()).thenReturn(
+				Arrays.asList(nullableNumericColumn, 
+							  numericColumn, 
+							  nullableCharacterColumn, 
+							  characterColumn));
 	}
 
-	private void mockColumn(ColumnMetadata column, String name, boolean isNullable, boolean isNumeric) {
+	private void mockColumn(ColumnMetadata column, String name, boolean isNullable, boolean isNumeric, boolean isCharacter) {
 		when(column.getName()).thenReturn(name);
 		when(column.isNullable()).thenReturn(isNullable);
 		when(column.isNumeric()).thenReturn(isNumeric);
+		when(column.isCharacter()).thenReturn(isCharacter);
 	}
 	
 	@Test
@@ -50,7 +63,10 @@ public class FixtureBuilderTest {
 		Map<String, Object> expectedValues = new HashMap<String, Object>();
 		expectedValues.put("nullableNumericColumn", null);
 		expectedValues.put("numericColumn", 0);
+		expectedValues.put("nullableCharacterColumn", null);
+		expectedValues.put("characterColumn", "A");
 		
 		assertEquals(expectedValues, actualFixture.getValues());
 	}
 }
+

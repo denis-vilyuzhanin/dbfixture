@@ -14,4 +14,8 @@ public class ColumnMetadata {
 		return null;
 	}
 
+	public boolean isCharacter() {
+		return false;
+	}
+
 }
