@@ -32,6 +32,8 @@ public class FixtureBuilderTest {
 	
 	@Mock
 	TypeMetadata anyDateType;
+	
+	Map<String, Object> expectedFixtureWithDefaultValues = new LinkedHashMap<String, Object>();
 
 	@Before
 	public void init() {
@@ -48,21 +50,19 @@ public class FixtureBuilderTest {
 				nullable(date(column("nullableDateColumn"))),
 				required(date(column("dateColumn"))));
 		when(table.getColumns()).thenReturn(columns);
+		
+		expectedFixtureWithDefaultValues.put("nullableNumericColumn", null);
+		expectedFixtureWithDefaultValues.put("numericColumn", 0);
+		expectedFixtureWithDefaultValues.put("nullableCharacterColumn", null);
+		expectedFixtureWithDefaultValues.put("characterColumn", "A");
+		expectedFixtureWithDefaultValues.put("nullableDateColumn", null);
+		expectedFixtureWithDefaultValues.put("dateColumn", new Date());
 	}
 
 	@Test
 	public void buildFixture() {
 		Fixture actualFixture = builder.build(table);
-
-		Map<String, Object> expectedValues = new LinkedHashMap<String, Object>();
-		expectedValues.put("nullableNumericColumn", null);
-		expectedValues.put("numericColumn", 0);
-		expectedValues.put("nullableCharacterColumn", null);
-		expectedValues.put("characterColumn", "A");
-		expectedValues.put("nullableDateColumn", null);
-		expectedValues.put("dateColumn", new Date());
-
-		assertEquals(expectedValues.toString(), actualFixture.getValues().toString());
+		assertEquals(expectedFixtureWithDefaultValues.toString(), actualFixture.getValues().toString());
 	}
 
 	private ColumnMetadata column(String name) {
