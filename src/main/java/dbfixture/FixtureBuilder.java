@@ -1,12 +1,13 @@
 package dbfixture;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class FixtureBuilder {
 
-	public Fixture build(TableMetadata table) {
+	public Fixture build(TableMetadata table, Map<String, Object> predefinedValues) {
 		Map<String, Object> values = new LinkedHashMap<String, Object>();
 		for (ColumnMetadata column : table.getColumns()) {
 			TypeMetadata type = column.getType();
@@ -28,9 +29,8 @@ public class FixtureBuilder {
 		return new Fixture(values);
 	}
 
-	public Fixture build(TableMetadata table, Map<String, Object> predefinedValues) {
-
-		return null;
+	public Fixture build(TableMetadata table) {
+		return build(table, Collections.<String, Object> emptyMap());
 	}
 
 }
