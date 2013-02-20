@@ -12,8 +12,9 @@ public class FixtureBuilder {
 		for (ColumnMetadata column : table.getColumns()) {
 			TypeMetadata type = column.getType();
 			Object value = null;
-			
-			if (!column.isNullable()) {
+			if (predefinedValues.containsKey(column.getName())) {
+				value = predefinedValues.get(column.getName());
+			} else if (!column.isNullable()) {
 				if (type.isNumeric()) {
 					value = 0;
 				} else if (type.isCharacter()) {
