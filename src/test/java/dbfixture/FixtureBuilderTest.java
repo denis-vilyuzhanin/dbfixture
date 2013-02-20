@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import static junit.framework.Assert.*;
@@ -18,6 +19,8 @@ import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class FixtureBuilderTest {
+	
+	private static final int ANY_INT = 100;
 
 	FixtureBuilder builder;
 
@@ -34,6 +37,7 @@ public class FixtureBuilderTest {
 	TypeMetadata anyDateType;
 	
 	Map<String, Object> expectedFixtureWithDefaultValues = new LinkedHashMap<String, Object>();
+	Map<String, Object> expectedFixtureWithOnePredefinedValue = new LinkedHashMap<String, Object>();
 
 	@Before
 	public void init() {
@@ -57,6 +61,9 @@ public class FixtureBuilderTest {
 		expectedFixtureWithDefaultValues.put("characterColumn", "A");
 		expectedFixtureWithDefaultValues.put("nullableDateColumn", null);
 		expectedFixtureWithDefaultValues.put("dateColumn", new Date());
+		
+		expectedFixtureWithOnePredefinedValue.putAll(expectedFixtureWithDefaultValues);
+		expectedFixtureWithOnePredefinedValue.put("nullableNumericColumn", ANY_INT);
 	}
 
 	@Test
@@ -64,7 +71,17 @@ public class FixtureBuilderTest {
 		Fixture actualFixture = builder.build(table);
 		assertEquals(expectedFixtureWithDefaultValues.toString(), actualFixture.getValues().toString());
 	}
-
+	
+	@Test
+	public void buildFixtureWithPredefinedValue() {
+		Map<String, Object> predefinedValues = new HashMap<String, Object>();
+		predefinedValues.put("nullableNumericColumn", ANY_INT);
+		
+		Fixture actualFixture = builder.build(table, predefinedValues);
+		assertEquals(expectedFixtureWithOnePredefinedValue.toString(), actualFixture.getValues().toString());
+		
+	}
+	
 	private ColumnMetadata column(String name) {
 		ColumnMetadata column = mock(ColumnMetadata.class);
 		when(column.getName()).thenReturn(name);

@@ -28,4 +28,9 @@ public class FixtureBuilder {
 		return new Fixture(values);
 	}
 
+	public Fixture build(TableMetadata table, Map<String, Object> predefinedValues) {
+
+		return null;
+	}
+
 }
