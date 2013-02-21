@@ -3,3 +3,8 @@
 
 I want have ability to specify value of any column when I have requested new fixture. 
 This can be useful when value can't be generated automatically. 
+
+*Unique Values*
+
+If table has unique constraint for some columns 
+than fixture must has unique values in this columns.
