@@ -24,7 +24,7 @@ public class FixtureBuilderUniqueConstraintTest {
 	FixtureBuilder builder = new FixtureBuilder();
 	
 	@Test
-	public void init() {
+	public void twoUniqueFixtures() {
 		when(table.getConstraints())
 			.thenReturn(Arrays.asList(singleColumnUniqueConstraint));
 		
