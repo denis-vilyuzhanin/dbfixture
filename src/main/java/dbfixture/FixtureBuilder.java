@@ -7,8 +7,18 @@ import java.util.Map;
 
 public class FixtureBuilder {
 
+	private DatabaseDialect dialect;
+	
 	public Fixture build(TableMetadata table, Map<String, Object> predefinedValues) {
 		Map<String, Object> values = new LinkedHashMap<String, Object>();
+		
+		for(ConstraintMetadata constraint : table.getConstraints()) {
+			for(ColumnMetadata column : constraint.getColumns()) {
+				SQLExpression uniqueValueExpression = dialect.uniqueValue(table, column);
+				values.put(column.getName(), uniqueValueExpression);
+			}
+		}
+		
 		for (ColumnMetadata column : table.getColumns()) {
 			TypeMetadata type = column.getType();
 			Object value = null;
